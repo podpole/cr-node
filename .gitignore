@@ -2,6 +2,11 @@ node_modules
 bower_components
 .idea
 .node_history
+app/config/db.js
+app/config/config.json
+.DS_Store
+/**/.DS_Store
+.gitignore
 
 
 

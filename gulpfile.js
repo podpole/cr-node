@@ -8,6 +8,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     cache = require('gulp-cache'),
     replace = require('gulp-replace'),
+    strip = require('gulp-strip-comments'),
     ts = require('gulp-typescript');
 
 var tsProject = ts.createProject('tsconfig.json');
@@ -21,19 +22,19 @@ gulp.task('css-libs', function () {
     'bower_components/bootstrap/dist/css/bootstrap.min.css'
   ])
   .pipe(replace('../fonts/', '/fonts/'))
-  .pipe(gulp.dest('assets/styles/libs/'));
+  .pipe(gulp.dest('public/styles/libs/'));
 });
 gulp.task('fonts', function () {
   return gulp.src([
     'bower_components/bootstrap/fonts/**/*'
   ])
-    .pipe(gulp.dest('assets/fonts/'));
+    .pipe(gulp.dest('public/fonts/'));
 });
 
 gulp.task('sass', function () {
-    return gulp.src(['assets/sass/*.sass'])
+    return gulp.src(['public/sass/*.sass'])
         .pipe(sass({outputStyle:'expanded'}).on('error', sass.logError))
-        .pipe(gulp.dest('assets/styles'))
+        .pipe(gulp.dest('public/styles'))
 });
 gulp.task('js-libs', function () {
   return gulp.src([
@@ -46,56 +47,57 @@ gulp.task('js-libs', function () {
     'bower_components/bootstrap/dist/js/bootstrap.min.js'
   ])
     .pipe(concat('libs.min.js'))
-    .pipe(gulp.dest('assets/js/libs/'))
+    .pipe(strip())
+    .pipe(gulp.dest('public/js/libs/'))
 });
 
-gulp.task('typescript', function() {
-  var tsResult = tsProject.src(gulp.src(
-    [
-      'assets/js/boApp/**/*.ts'
-    ]
-  ))
-    .pipe(ts(tsProject));
-
-  return tsResult.js.pipe(gulp.dest('assets/js/boApp'));
-});
-
-gulp.task('css', function () {
-    return gulp.src(['app/styles/*.css'])
-        .pipe(cssnano())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('src/styles'))
-});
-
-gulp.task('layouts', function () {
-    return gulp.src(['app/index.html'])
-        .pipe(gulp.dest('src'));
-});
-
-gulp.task('templates', function () {
-    return gulp.src(['app/tpl/*.html'])
-        .pipe(gulp.dest('src/tpl'));
-});
-
-gulp.task('img', function() {
-    return gulp.src('app/img/**/*')
-        .pipe(cache(imagemin({
-            interlaced: true,
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        })))
-        .pipe(gulp.dest('src/img'));
-});
-gulp.task('config', function () {
-    return gulp.src(['app/.htaccess'])
-        .pipe(gulp.dest('src'));
-});
-
-gulp.task('watch', function () {
-    gulp.watch(['app/styles/*.sass'], ['sass']);
-    gulp.watch(['src/styles/main.css'], ['css-libs']);
-});
-
-
-gulp.task('default', ['watch']);
+// gulp.task('typescript', function() {
+//   var tsResult = tsProject.src(gulp.src(
+//     [
+//       'static/js/boApp/**/*.ts'
+//     ]
+//   ))
+//     .pipe(ts(tsProject));
+//
+//   return tsResult.js.pipe(gulp.dest('static/js/boApp'));
+// });
+//
+// gulp.task('css', function () {
+//     return gulp.src(['app/styles/*.css'])
+//         .pipe(cssnano())
+//         .pipe(rename({suffix: '.min'}))
+//         .pipe(gulp.dest('src/styles'))
+// });
+//
+// gulp.task('layouts', function () {
+//     return gulp.src(['app/index.html'])
+//         .pipe(gulp.dest('src'));
+// });
+//
+// gulp.task('templates', function () {
+//     return gulp.src(['app/tpl/*.html'])
+//         .pipe(gulp.dest('src/tpl'));
+// });
+//
+// gulp.task('img', function() {
+//     return gulp.src('app/img/**/*')
+//         .pipe(cache(imagemin({
+//             interlaced: true,
+//             progressive: true,
+//             svgoPlugins: [{removeViewBox: false}],
+//             use: [pngquant()]
+//         })))
+//         .pipe(gulp.dest('src/img'));
+// });
+// gulp.task('config', function () {
+//     return gulp.src(['app/.htaccess'])
+//         .pipe(gulp.dest('src'));
+// });
+//
+// gulp.task('watch', function () {
+//     gulp.watch(['app/styles/*.sass'], ['sass']);
+//     gulp.watch(['src/styles/main.css'], ['css-libs']);
+// });
+//
+//
+// gulp.task('default', ['watch']);

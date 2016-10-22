@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    .login-form
+        .header Авторизация
+        .form-content
+            form(action='/login', method='post')
+                .form-group
+                    label Электронная почта
+                    input.form-control(type='text', placeholder='Введите ваш email адрес', name='username')
+                .form-group
+                    label Пароль
+                    input.form-control(type='password', placeholder='Ваш пароль', name='password')
+                .form-group
+                    input.btn.btn-primary(type='submit', value='Войти', title='Войти')

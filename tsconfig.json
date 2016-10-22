@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": ["es5", "dom", "es2015.promise"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
