@@ -22,5 +22,11 @@ CategoryController.getList = function (req, res, next) {
     }
 };
 
+CategoryController.saveCategory = function (req, res, next) {
+    console.log(req.body);
+    console.log(req.body.title);
+    res.status(200);
+};
+
 
 module.exports = CategoryController;

@@ -3,7 +3,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 export interface ICategory {
-    id: number,
+    id?: number,
     title: string,
     header: string,
     url: string,
@@ -11,6 +11,12 @@ export interface ICategory {
     meta_title: string,
     meta_description: string,
     meta_keywords: string
+}
+
+export interface IStatus {
+    status: string,
+    error?: string,
+    data?: string
 }
 
 @Injectable()
@@ -26,14 +32,25 @@ export class CategoryService {
         return this.http.get(this.categoryUrl + 'list')
             .toPromise()
             .then((response) => {
-                let result = response.json();
-
-                if (result.access == 'deny')
+                /*if (result.access == 'deny')
                 {
                     this.handleError({message:'Access Deny'});
 
                 }
-                //response.json().data as ICategory[]
+                else
+                {
+
+                }*/
+                return response.json().data as ICategory[]
+            })
+            .catch(this.handleError);
+    }
+
+    saveNewCategory(data: ICategory): Promise<IStatus> {
+        return this.http.post(this.categoryUrl + 'save', data)
+            .toPromise()
+            .then((response) => {
+                return response.json().data as IStatus;
             })
             .catch(this.handleError);
     }

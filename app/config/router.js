@@ -19,6 +19,9 @@ router.get('/admin*', function(req, res, next) {
 router.get('/api/category/list', function(req, res, next) {
     AdminCategoryController.getList(req, res, next);
 });
+router.post('/api/category/save', function(req, res, next) {
+    AdminCategoryController.saveCategory(req, res, next);
+});
 
 router.get('/api/admin/init', function(req, res, next) {
     AdminBaseController.adminInit(req, res, next);

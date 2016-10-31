@@ -20,16 +20,16 @@ const boRoutes: Routes = [
     component: ErrorComponent
   },
   {
-    path: 'content',
-    redirectTo: 'content/recipes'
-  },
-  {
     path: 'content/recipes',
     component: RecipesComponent
   },
   {
     path: 'content/category',
     component: CategoryComponent
+  },
+  {
+    path: 'content',
+    redirectTo: 'content/recipes'
   }
 ];
 

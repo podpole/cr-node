@@ -7,6 +7,7 @@ app/config/config.json
 .DS_Store
 /**/.DS_Store
 .gitignore
+public/js/boApp/**/*.js
 
 
 

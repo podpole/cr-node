@@ -1,1 +1,77 @@
-<h1>Category</h1>
+<h1 class="page-header">Categories</h1>
+<div class="col-sm-12 col-md-12 col-lg-7">
+    <div class="table-responsive" *ngIf="categoryList.length > 0">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Url</th>
+                <th width="100%">Title</th>
+                <th class="options-column">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let categoryItem of categoryList">
+                <td>{{categoryItem.id}}</td>
+                <td>{{categoryItem.url}}</td>
+                <td>{{categoryItem.title}}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> edit</button>
+                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-sm-12 col-md-12 col-lg-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">New category</h3>
+        </div>
+        <div class="panel-body">
+            <form *ngIf="active" (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+                <div class="form-group" [ngClass]="{'has-error': title.invalid && title.dirty}">
+                    <label for="titleInput" class="control-label">Title</label>
+                    <input type="text" class="form-control" id="titleInput" placeholder="Title" name="title" required [(ngModel)]="category.title" #title="ngModel">
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': header.invalid && header.dirty}">
+                    <label for="headerInput" class="control-label">Header</label>
+                    <input type="text" class="form-control" id="headerInput" placeholder="Header" name="header" required [(ngModel)]="category.header" #header="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="urlInput" class="control-label">URL</label>
+                    <input type="text" class="form-control" id="urlInput" placeholder="Url" name="url" required [(ngModel)]="category.url" #url="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="descriptionInput" class="control-label">Description</label>
+                    <textarea class="form-control" rows="3" id="descriptionInput" placeholder="Description" name="description" [(ngModel)]="category.description" #description="ngModel"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="metaTitleInput" class="control-label">Meta title</label>
+                    <input type="text" class="form-control" id="metaTitleInput" placeholder="Meta-title" name="meta_title" [(ngModel)]="category.meta_title" #meta_title="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="metaDescriptionInput" class="control-label">Meta description</label>
+                    <textarea class="form-control" rows="2" id="metaDescriptionInput" placeholder="Meta description" name="meta_description" [(ngModel)]="category.meta_description" #meta_description="ngModel"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="metaKeywordsInput" class="control-label">Meta keywords</label>
+                    <textarea class="form-control" rows="2" id="metaKeywordsInput" placeholder="Meta keywords" name="meta_keywords" [(ngModel)]="category.meta_keywords" #meta_keywords="ngModel"></textarea>
+                </div>
+                <div class="form-group"
+                     [hidden]="(title.valid || title.pristine) && (header.valid || header.pristine)">
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> please, complete all required fields
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="newCategory()" [disabled]="!categoryForm.form.valid">Save category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
